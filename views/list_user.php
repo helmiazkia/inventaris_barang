@@ -17,7 +17,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Daftar User</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -25,7 +25,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <!-- Navbar Kiri -->
     <div class="w-64 h-screen bg-blue-900 text-white p-5 flex flex-col">
         <!-- Logo dan Teks -->
-        <div class="flex items-center mb-9 ">
+        <div class="flex items-center mb-9">
             <img src="../public/image.png" alt="Logo" class="w-12 h-12 mr-4">
             <span class="text-xs">Dinas Komunikasi Informatika dan Statistika<br> Kab.Brebes</span>
         </div>
@@ -41,15 +41,34 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
     <!-- Konten Halaman Utama -->
     <div class="flex-1 p-8">
-        <h1 class="text-2xl font-semibold mb-6">Selamat datang, <?php echo $_SESSION['username']; ?> (Admin)</h1>
-        <p>Ini adalah dashboard admin. Anda dapat menambah, mengelola, dan menghapus pengguna dari sini.</p>
+        <h1 class="text-2xl font-semibold mb-6">Daftar User</h1>
 
-        <!-- Link CRUD User -->
-        <h4 class="text-xl mt-8">Manajemen User</h4>
-        <ul class="list-disc pl-5">
-            <li><a href="create_user.php" class="text-blue-600 hover:underline">Tambah User Baru</a></li>
-            <li><a href="list_user.php" class="text-blue-600 hover:underline">Lihat Daftar User</a></li>
-        </ul>
+        <table class="min-w-full table-auto">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Username</th>
+                    <th class="px-4 py-2">Role</th>
+                    <th class="px-4 py-2">Jabatan</th>
+                    <th class="px-4 py-2">NIP</th>
+                    <th class="px-4 py-2">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Tampilkan data user -->
+                <tr>
+                    <td class="border px-4 py-2">1</td>
+                    <td class="border px-4 py-2">Admin</td>
+                    <td class="border px-4 py-2">Admin</td>
+                    <td class="border px-4 py-2">Manager</td>
+                    <td class="border px-4 py-2">123456789</td>
+                    <td class="border px-4 py-2">
+                        <a href="edit_user.php?id=1" class="text-blue-600 hover:underline">Edit</a> | 
+                        <a href="delete_user.php?id=1" class="text-red-600 hover:underline">Hapus</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 

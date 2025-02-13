@@ -1,15 +1,12 @@
 <?php
-$host = 'localhost'; // alamat host
-$dbname = 'inventaris_barang'; // nama database
-$username = 'root'; // username database
-$password = ''; // password database
+$host = "localhost"; // Sesuaikan dengan host Anda
+$user = "root"; // Sesuaikan dengan username MySQL Anda
+$pass = ""; // Sesuaikan dengan password MySQL Anda
+$dbname = "inventaris_barang"; // Nama database Anda
 
-// Membuat koneksi dengan PDO
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // Set error mode ke exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Koneksi gagal: " . $e->getMessage();
+$conn = mysqli_connect($host, $user, $pass, $dbname);
+
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
 }
 ?>

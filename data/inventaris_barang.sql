@@ -44,6 +44,7 @@ CREATE TABLE peminjaman (
     tanggal_pinjam DATE NOT NULL,
     tanggal_kembali DATE DEFAULT NULL,
     status ENUM('dipinjam', 'dikembalikan') DEFAULT 'dipinjam',
+    catatan TEXT,
     FOREIGN KEY (barang_id) REFERENCES barang(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
