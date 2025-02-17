@@ -18,26 +18,11 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 
 if ($stmt->execute()) {
-    $success_message = "User berhasil dihapus!";
+    // Redirect dengan notifikasi success
+    header("Location: manage_user.php?success=User berhasil dihapus!");
+    exit();
 } else {
-    $error_message = "Gagal menghapus user!";
+    // Redirect dengan notifikasi error
+    header("Location: manage_user.php?error=Gagal menghapus user!");
+    exit();
 }
-?>
-
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hapus User</title>
-</head>
-<body>
-    <h2>Hapus User</h2>
-
-    <?php if (isset($success_message)): ?>
-        <p style="color:green;"><?php echo $success_message; ?></p>
-    <?php endif; ?>
-
-    <?php if (isset($error_message)): ?>
-        <p style="color:red;"><?php echo $error_message; ?></p>
-    <?php endif; ?>

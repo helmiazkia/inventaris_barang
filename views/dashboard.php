@@ -22,8 +22,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
 </head>
 
 <body class="flex">
-    <!-- Navbar Kiri -->
-    <div class="w-64 h-screen bg-blue-900 text-white p-5 flex flex-col">
+    <!-- Navbar Kiri (Fixed) -->
+    <div class="w-64 h-screen bg-blue-900 text-white p-5 flex flex-col fixed top-0 left-0">
         <!-- Logo dan Teks -->
         <div class="flex items-center mb-9 ">
             <img src="../public/image.png" alt="Logo" class="w-12 h-12 mr-4">
@@ -33,14 +33,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <!-- Menu Navbar -->
         <div class="flex flex-col space-y-4 mt-5">
             <a href="dashboard.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'dashboard.php') ? 'bg-blue-700' : ''; ?>">Dashboard</a>
-            <a href="create_user.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'create_user.php') ? 'bg-blue-700' : ''; ?>">Tambah User</a>
-            <a href="list_user.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'list_user.php') ? 'bg-blue-700' : ''; ?>">Daftar User</a>
+            <a href="manage_user.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'manage_user.php') ? 'bg-blue-700' : ''; ?>">Manajemen User</a>
             <a href="logout.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'logout.php') ? 'bg-blue-700' : ''; ?>">Logout</a>
         </div>
     </div>
 
     <!-- Konten Halaman Utama -->
-    <div class="flex-1 p-8">
+    <div class="flex-1 p-8 ml-64"> <!-- Added ml-64 to push content to the right -->
         <h1 class="text-2xl font-semibold mb-6">Selamat datang, <?php echo $_SESSION['username']; ?> (Admin)</h1>
         <p>Ini adalah dashboard admin. Anda dapat menambah, mengelola, dan menghapus pengguna dari sini.</p>
 
