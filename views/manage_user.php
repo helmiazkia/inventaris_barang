@@ -7,8 +7,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Tentukan halaman aktif
-$action = isset($_GET['action']) ? $_GET['action'] : 'addUser';
+// Cek validitas action dari URL
+$valid_actions = ['addUser', 'listUser'];
+$action = isset($_GET['action']) && in_array($_GET['action'], $valid_actions) ? $_GET['action'] : 'addUser';
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +40,8 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'addUser';
     <?php include('navbar.php'); ?>
 
     <!-- Konten Halaman Utama -->
-    <div class="ml-64 p-8 pt-16">
-        <h1 class="text-3xl font-bold mb-6 text-gray-800">Manajemen Pengguna</h1>
+    <div class="ml-64 p-8 pt-16 mt-3">
+        
 
         <!-- Tombol Tab -->
         <div class="flex space-x-4 mb-6">

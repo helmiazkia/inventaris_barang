@@ -1,6 +1,5 @@
 <!-- navbar.php -->
 <?php
-session_start();
 
 $current_page = basename($_SERVER['PHP_SELF']);
 $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest';
@@ -25,11 +24,13 @@ $current_title = isset($page_titles[$current_page]) ? $page_titles[$current_page
     </div>
 
     <!-- Menu Navbar -->
-    <div class="flex flex-col space-y-4 mt-5">
+    <div class="flex flex-col space-y-4 mt-5 mb-auto">
         <a href="dashboard.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'dashboard.php') ? 'bg-blue-700' : ''; ?>">Dashboard</a>
         <a href="manage_user.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'manage_user.php') ? 'bg-blue-700' : ''; ?>">Manajemen User</a>
-        <a href="logout.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'logout.php') ? 'bg-blue-700' : ''; ?>">Logout</a>
     </div>
+
+    <!-- Link Logout di bagian paling bawah dengan Bingkai -->
+    <a href="logout.php" class="text-lg hover:bg-blue-700 hover:border-blue-700 hover:text-white p-2 rounded-md border border-transparent <?php echo ($current_page == 'logout.php') ? 'bg-blue-700 text-white border-blue-700' : 'border-white'; ?>">Logout</a>
 </div>
 
 <!-- Navbar Atas -->

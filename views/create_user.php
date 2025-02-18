@@ -18,13 +18,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
     $stmt->bind_param("sssss", $username, $hashed_password, $role, $jabatan, $nip);
 
     if ($stmt->execute()) {
-        // Redirect dengan notifikasi success
-        header("Location: manage_user.php?success=User berhasil ditambahkan!");
-        exit();
+        // Set session untuk mengirimkan pesan sukses ke JavaScript
+        echo "<script type='text/javascript'>
+                window.onload = function() {
+                    alert('User berhasil ditambahkan!');
+                }
+              </script>";
     } else {
-        // Redirect dengan notifikasi error
-        header("Location: manage_user.php?error=Gagal menambahkan user!");
-        exit();
+        // Set session untuk mengirimkan pesan error ke JavaScript
+        echo "<script type='text/javascript'>
+                window.onload = function() {
+                    alert('Gagal menambahkan user!');
+                }
+              </script>";
     }
 }
 ?>

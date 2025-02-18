@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-// Cek apakah pengguna adalah admin
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+// Cek apakah pengguna adalah admin atau user yang sedang login
+if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'admin' && $_SESSION['id'] !== $_GET['id'])) {
     header("Location: login.php");
     exit();
 }
@@ -45,18 +45,14 @@ if ($result->num_rows > 0) {
         if ($stmt->execute()) {
             // Jika user yang sedang login mengupdate akunnya sendiri
             if ($_SESSION['id'] == $user_id) {
-                if (!empty($password)) {
-                    // Logout jika password diubah
-                    session_destroy();
-                    header("Location: ../login.php");
-                    exit();
-                } else {
-                    // Perbarui session agar perubahan langsung terlihat
-                    $_SESSION['username'] = $username;
-                    $_SESSION['role'] = $role;
-                    $_SESSION['jabatan'] = $jabatan;
-                    $_SESSION['nip'] = $nip;
-                }
+                // Logout jika password diubah
+                session_destroy();
+                header("Location: ../login.php");
+                exit();
+            } else {
+                // Redirect ke daftar user setelah berhasil update
+                header("Location: manage_user.php?action=listUser");
+                exit();
             }
             $success_message = "User berhasil diperbarui!";
         } else {
@@ -67,7 +63,6 @@ if ($result->num_rows > 0) {
     $error_message = "User tidak ditemukan!";
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -80,8 +75,6 @@ if ($result->num_rows > 0) {
 <body class="bg-gray-100">
     <!-- Panggil Navbar -->
     <?php include('navbar.php'); ?>
-
-</body>
 
     <!-- Konten Halaman Edit -->
     <div class="ml-64 p-8 pt-16 mt-1">
@@ -104,7 +97,7 @@ if ($result->num_rows > 0) {
 
             <div class="mb-4">
                 <label for="password" class="block text-sm font-medium">Password</label>
-                <input type="password" id="password" name="password" required class="w-full px-4 py-2 border rounded-md">
+                <input type="password" id="password" name="password" class="w-full px-4 py-2 border rounded-md">
             </div>
 
             <div class="mb-4">
