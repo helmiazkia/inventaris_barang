@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('./config/koneksi.php');
+include('../config/koneksi.php'); // Sesuaikan path koneksi
 
 // Cek apakah pengguna sudah login
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -30,10 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Redirect berdasarkan role
             if ($user['role'] == 'admin') {
-                header("Location: ./views/dashboard.php");
+                header("Location: dashboard.php"); // Sesuaikan path redirect
             } else {
                 header("Location: index.php");
             }
+            exit();
         } else {
             $error_message = "NIP atau password salah!";
         }
@@ -53,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen">
     <div class="relative w-full h-full">
-        <img src="./public/background.png" class="absolute w-full h-full object-cover" alt="Background">
+        <img src="../public/background.png" class="absolute w-full h-full object-cover" alt="Background"> <!-- Path diperbaiki -->
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
-                <img src="./public/image.png" class="mx-auto w-16 mb-4" alt="Logo">
+                <img src="../public/image.png" class="mx-auto w-16 mb-4" alt="Logo"> <!-- Path diperbaiki -->
                 <h2 class="text-blue-600 font-bold text-xl mb-3">SimA Login</h2>
                 
                 <?php if (isset($error_message)): ?>

@@ -2,7 +2,6 @@
 session_start();
 session_unset(); // Hapus semua session
 session_destroy(); // Hancurkan session
-header("Location: ../login.php");
+header("Location: ../views/login.php");
 exit();
 ?>
-
