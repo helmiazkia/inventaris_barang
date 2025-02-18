@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 }
 
 // Tentukan halaman aktif
-$current_page = basename($_SERVER['PHP_SELF']);
+$action = isset($_GET['action']) ? $_GET['action'] : 'addUser';
 ?>
 
 <!DOCTYPE html>
@@ -22,67 +22,60 @@ $current_page = basename($_SERVER['PHP_SELF']);
         .tab-content {
             display: none;
         }
-
         .tab-content.active {
             display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="flex">
-    <!-- Navbar Kiri -->
-    <div class="w-64 h-screen bg-blue-900 text-white p-5 flex flex-col fixed top-0 left-0">
-        <div class="flex items-center mb-9">
-            <img src="../public/image.png" alt="Logo" class="w-12 h-12 mr-4">
-            <span class="text-xs">Dinas Komunikasi Informatika dan Statistika<br> Kab.Brebes</span>
-        </div>
-
-        <!-- Menu Navbar -->
-        <div class="flex flex-col space-y-4 mt-5">
-            <a href="dashboard.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'dashboard.php') ? 'bg-blue-700' : ''; ?>">Dashboard</a>
-            <a href="manage_user.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'manage_user.php') ? 'bg-blue-700' : ''; ?>">Manajemen User</a>
-            <a href="logout.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'logout.php') ? 'bg-blue-700' : ''; ?>">Logout</a>
-        </div>
-    </div>
+<body class="bg-gray-100">
+    <!-- Navbar (Fixed Sidebar) -->
+    <body class="flex">
+    <!-- Panggil Navbar -->
+    <?php include('navbar.php'); ?>
 
     <!-- Konten Halaman Utama -->
-    <div class="flex-1 p-8 ml-64"> <!-- Added ml-64 to push content to the right -->
-        <h1 class="text-2xl font-semibold mb-6">Manajemen Pengguna</h1>
+    <div class="ml-64 p-8 pt-16">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800">Manajemen Pengguna</h1>
 
-        <!-- Tombol Tab untuk Pilih Tampilan -->
-        <div class="mb-6">
-            <button onclick="showTab('addUser')" class="bg-blue-600 text-white py-2 px-4 rounded-md mr-2 hover:bg-blue-700 <?php echo ($current_page == 'manage_user.php') && !isset($_GET['action']) ? 'bg-blue-700' : ''; ?>">Tambah User</button>
-            <button onclick="showTab('listUser')" class="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 <?php echo isset($_GET['action']) && $_GET['action'] == 'listUser' ? 'bg-blue-700' : ''; ?>">Daftar User</button>
+        <!-- Tombol Tab -->
+        <div class="flex space-x-4 mb-6">
+            <button onclick="showTab('addUser')" class="flex items-center space-x-2 px-5 py-3 rounded-lg transition duration-300 
+                <?php echo ($action == 'addUser') ? 'bg-blue-700 text-white shadow-lg' : 'bg-white border text-gray-700 hover:bg-gray-100'; ?>">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                <span>Tambah User</span>
+            </button>
+            <button onclick="showTab('listUser')" class="flex items-center space-x-2 px-5 py-3 rounded-lg transition duration-300 
+                <?php echo ($action == 'listUser') ? 'bg-blue-700 text-white shadow-lg' : 'bg-white border text-gray-700 hover:bg-gray-100'; ?>">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M6 3a3 3 0 100 6 3 3 0 000-6zm0 8a5 5 0 100 10 5 5 0 000-10zm8-8a3 3 0 100 6 3 3 0 000-6zm0 8a5 5 0 100 10 5 5 0 000-10z"></path></svg>
+                <span>Daftar User</span>
+            </button>
         </div>
 
         <!-- Tab Content - Tambah User -->
-        <div id="addUser" class="tab-content active">
-            <h3 class="text-xl mb-4">Tambah User Baru</h3>
-            <div class="border p-4 mb-8">
-                <!-- Memanggil form create_user.php -->
+        <div id="addUser" class="tab-content <?php echo ($action == 'addUser') ? 'active' : ''; ?>">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Tambah User Baru</h3>
                 <?php include('create_user.php'); ?>
             </div>
         </div>
 
         <!-- Tab Content - Daftar User -->
-        <div id="listUser" class="tab-content">
-            <h3 class="text-xl mb-4">Daftar User</h3>
-            <div class="border p-4">
-                <!-- Memanggil tabel list_user.php -->
+        <div id="listUser" class="tab-content <?php echo ($action == 'listUser') ? 'active' : ''; ?>">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4 text-gray-800">Daftar User</h3>
                 <?php include('list_user.php'); ?>
             </div>
         </div>
     </div>
 
     <script>
-        // Fungsi untuk menampilkan tab yang dipilih
         function showTab(tabName) {
-            // Menyembunyikan semua tab
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-
-            // Menampilkan tab yang dipilih
-            const selectedTab = document.getElementById(tabName);
-            selectedTab.classList.add('active');
+            window.location.href = '?action=' + tabName;
         }
     </script>
 </body>

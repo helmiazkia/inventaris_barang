@@ -30,15 +30,34 @@ if ($result->num_rows > 0) {
         $jabatan = $_POST['jabatan'];
         $nip = $_POST['nip'];
 
-        // Jika password diubah, hash password baru
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-        // Update data user
-        $sql = "UPDATE users SET username = ?, password = ?, role = ?, jabatan = ?, nip = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssi", $username, $hashed_password, $role, $jabatan, $nip, $user_id);
+        // Cek apakah password diubah
+        if (!empty($password)) {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "UPDATE users SET username = ?, password = ?, role = ?, jabatan = ?, nip = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssssi", $username, $hashed_password, $role, $jabatan, $nip, $user_id);
+        } else {
+            $sql = "UPDATE users SET username = ?, role = ?, jabatan = ?, nip = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssii", $username, $role, $jabatan, $nip, $user_id);
+        }
 
         if ($stmt->execute()) {
+            // Jika user yang sedang login mengupdate akunnya sendiri
+            if ($_SESSION['id'] == $user_id) {
+                if (!empty($password)) {
+                    // Logout jika password diubah
+                    session_destroy();
+                    header("Location: ../login.php");
+                    exit();
+                } else {
+                    // Perbarui session agar perubahan langsung terlihat
+                    $_SESSION['username'] = $username;
+                    $_SESSION['role'] = $role;
+                    $_SESSION['jabatan'] = $jabatan;
+                    $_SESSION['nip'] = $nip;
+                }
+            }
             $success_message = "User berhasil diperbarui!";
         } else {
             $error_message = "Gagal memperbarui user!";
@@ -49,6 +68,7 @@ if ($result->num_rows > 0) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -57,24 +77,14 @@ if ($result->num_rows > 0) {
     <title>Edit User</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="flex">
-    <!-- Navbar Kiri -->
-    <div class="w-64 h-screen bg-blue-900 text-white p-5 flex flex-col fixed top-0 left-0">
-        <div class="flex items-center mb-9">
-            <img src="../public/image.png" alt="Logo" class="w-12 h-12 mr-4">
-            <span class="text-xs">Dinas Komunikasi Informatika dan Statistika<br> Kab.Brebes</span>
-        </div>
+<body class="bg-gray-100">
+    <!-- Panggil Navbar -->
+    <?php include('navbar.php'); ?>
 
-        <!-- Menu Navbar -->
-        <div class="flex flex-col space-y-4 mt-5">
-            <a href="dashboard.php" class="text-lg hover:bg-blue-700 p-2 rounded-md">Dashboard</a>
-            <a href="manage_user.php" class="text-lg hover:bg-blue-700 p-2 rounded-md">Manajemen User</a>
-            <a href="logout.php" class="text-lg hover:bg-blue-700 p-2 rounded-md">Logout</a>
-        </div>
-    </div>
+</body>
 
     <!-- Konten Halaman Edit -->
-    <div class="flex-1 p-8 ml-64">
+    <div class="ml-64 p-8 pt-16 mt-1">
         <h1 class="text-2xl font-semibold mb-6">Edit User</h1>
 
         <!-- Tampilkan pesan error/sukses -->
