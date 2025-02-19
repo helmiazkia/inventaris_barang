@@ -1,5 +1,12 @@
 <?php
 
+
+// Check if the user is logged in and has 'admin' role
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: login.php");
+    exit; // Stop further script execution
+}
+
 include('../config/koneksi.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
@@ -34,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
     }
 }
 ?>
-
 
 <!-- Form Tambah User -->
 <form method="POST" action="">

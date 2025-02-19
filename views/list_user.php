@@ -1,5 +1,11 @@
 <?php
 
+// Check if the user is logged in and has 'admin' role
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: login.php");
+    exit; // Stop further script execution
+}
+
 include('../config/koneksi.php');
 
 // Ambil semua data user
