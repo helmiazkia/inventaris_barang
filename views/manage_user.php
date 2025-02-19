@@ -77,7 +77,7 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
             <button onclick="showTab('listUser')" class="flex items-center space-x-2 px-5 py-3 rounded-lg transition duration-300 
                 <?php echo ($action == 'listUser') ? 'bg-blue-700 text-white shadow-lg' : 'bg-white border text-gray-700 hover:bg-gray-100'; ?>">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M6 3a3 3 0 100 6 3 3 0 000-6zm0 8a5 5 0 100 10 5 5 0 000-10zm8-8a3 3 0 100 6 3 3 0 000-6zm0 8a5 5 0 100 10 5 5 0 000-10z"></path></svg>
-                <span>Daftar User</span>
+                <span>Daftar User1</span>
             </button>
         </div>
 
