@@ -11,7 +11,7 @@ echo "<h1>Daftar Barang</h1>";
 echo "<table border='1'>";
 echo "<tr><th>Nama Barang</th><th>Kode Barang</th><th>Kategori</th><th>Ruangan</th><th>Jumlah</th><th>Status</th><th>Aksi</th></tr>";
 foreach ($barang as $item) {
-    echo "<tr>";1
+    echo "<tr>";
     echo "<td>" . $item['nama_barang'] . "</td>";
     echo "<td>" . $item['kode_barang'] . "</td>";
     echo "<td>" . $item['nama_kategori'] . "</td>";
