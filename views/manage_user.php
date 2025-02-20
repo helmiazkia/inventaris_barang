@@ -60,7 +60,7 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
 </head>
 <body class="bg-gray-100">
     <!-- Navbar (Fixed Sidebar) -->
-    <body class="flex">
+  
     <!-- Panggil Navbar -->
     <?php include('navbar.php'); ?>
 

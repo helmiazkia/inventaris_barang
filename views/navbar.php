@@ -8,8 +8,8 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : 'User';
 $page_titles = [
     'dashboard.php' => 'Dashboard',
     'manage_user.php' => 'Manajemen User',
+    'manage_barang.php' => 'Manajemen Barang',
     'logout.php' => 'Logout',
-    'edit_user.php' => 'Edit data user',
     'manage_ruangan' => 'Manajemen Ruanngan'
 ];
 
@@ -28,7 +28,7 @@ $current_title = isset($page_titles[$current_page]) ? $page_titles[$current_page
     <div class="flex flex-col space-y-4 mt-5 mb-auto">
         <a href="dashboard.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'dashboard.php') ? 'bg-blue-700' : ''; ?>">Dashboard</a>
         <a href="manage_user.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'manage_user.php') ? 'bg-blue-700' : ''; ?>">Manajemen User</a>
-        <a href="manage_ruangan.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'manage_ruangan.php') ? 'bg-blue-700' : ''; ?>">Manajemen Ruangan</a>
+        <a href="manage_barang.php" class="text-lg hover:bg-blue-700 p-2 rounded-md <?php echo ($current_page == 'manage_barang.php') ? 'bg-blue-700' : ''; ?>">Manajemen Barang</a>
     </div>
 
     <!-- Link Logout di bagian paling bawah dengan Bingkai -->
