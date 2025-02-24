@@ -20,25 +20,31 @@ CREATE TABLE kategori (
     nama_kategori VARCHAR(100) NOT NULL
 );
 
--- Tabel Barang dengan Penambahan Kolom Baru
+-- Tabel Barang
 CREATE TABLE barang (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama_barang VARCHAR(100) NOT NULL,
-    kode_barang VARCHAR(50) UNIQUE NOT NULL,  -- Kode barang yang unik
-    barcode VARCHAR(50) UNIQUE NOT NULL,  -- Barcode yang unik
+    kode_barang VARCHAR(50) UNIQUE NOT NULL,  
+    barcode VARCHAR(50) UNIQUE NOT NULL,  
     kategori_id INT NOT NULL,
-    tahun_pembuatan INT,  -- Tahun pembuatan/pembelian barang
-    bahan VARCHAR(100),  -- Bahan barang
-    ukuran VARCHAR(100),  -- Ukuran barang
-    nomor_seri_pabrik VARCHAR(50),  -- Nomor seri pabrik
-    merk_model VARCHAR(100),  -- Merk/Model barang
-    jenis_barang VARCHAR(100),  -- Jenis barang (misalnya elektronik, furnitur, dll)
-    jumlah INT DEFAULT 1,  -- Jumlah barang yang ada
-    harga_beli DECIMAL(10, 2),  -- Harga beli barang
-    kondisi_barang ENUM('baik', 'kurang baik', 'rusak', 'rusak berat') DEFAULT 'baik',  -- Keadaan barang
-    foto VARCHAR(255),  -- Foto barang (untuk menyimpan path gambar)
-    status ENUM('tersedia', 'dipinjam', 'hilang') DEFAULT 'tersedia',  -- Status barang (tersedia, dipinjam, hilang)
+    tahun_pembuatan INT,  
+    bahan VARCHAR(100),  
+    ukuran VARCHAR(100),  
+    nomor_seri_pabrik VARCHAR(50),  
+    merk_model VARCHAR(100),  
+    jenis_barang VARCHAR(100),  
+    jumlah INT DEFAULT 1,  
+    harga_beli DECIMAL(10, 2),  
+    kondisi_barang ENUM('baik', 'kurang baik', 'rusak', 'rusak berat') DEFAULT 'baik',  
+    foto VARCHAR(255),  
+    status ENUM('tersedia', 'dipinjam', 'hilang') DEFAULT 'tersedia',  
     FOREIGN KEY (kategori_id) REFERENCES kategori(id) ON DELETE CASCADE
+);
+
+-- Tabel Ruangan
+CREATE TABLE ruangan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nama_ruangan VARCHAR(100) NOT NULL
 );
 
 -- Tabel Pemindahan Barang
