@@ -19,7 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mengupload foto
     $foto = $_FILES['foto']['name'];
     $foto_tmp = $_FILES['foto']['tmp_name'];
+<<<<<<< HEAD
     $foto_path = '../images/' . basename($foto);  // Nama file foto dengan path
+=======
+    $foto_path = 'images/' . basename($foto);  // Nama file foto dengan path
+>>>>>>> b253cbb1f8b6208e99f0bdc0bf68493b2f7d8e86
 
     // Cek jika file foto valid
     $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif']; // Ekstensi file yang diizinkan
