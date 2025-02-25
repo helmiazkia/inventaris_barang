@@ -1,11 +1,4 @@
 <?php
-include('../config/koneksi.php');
-
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header("Location: login.php");
-    exit; // Stop further script execution
-}
-
 // Proses form submit untuk menambah barang
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama_barang = $_POST['nama_barang'];
@@ -26,21 +19,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mengupload foto
     $foto = $_FILES['foto']['name'];
     $foto_tmp = $_FILES['foto']['tmp_name'];
-    $foto_path = 'images/' . $foto;  // Direktori tempat foto disimpan
+    $foto_path = '../images/' . basename($foto);  // Nama file foto dengan path
+
+    // Cek jika file foto valid
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif']; // Ekstensi file yang diizinkan
+    $file_extension = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
+
+    // Cek apakah file adalah gambar
+    if (!in_array($file_extension, $allowed_extensions)) {
+        echo "Hanya file gambar (jpg, jpeg, png, gif) yang diperbolehkan!";
+        exit;
+    }
+
+    // Cek ukuran file (maksimal 2MB)
+    $max_size = 2 * 1024 * 1024; // 2MB
+    if ($_FILES['foto']['size'] > $max_size) {
+        echo "Ukuran file terlalu besar. Maksimal 2MB!";
+        exit;
+    }
 
     // Pindahkan foto ke direktori tujuan
-    move_uploaded_file($foto_tmp, $foto_path);
+    if (move_uploaded_file($foto_tmp, $foto_path)) {
+        // Insert data barang ke database
+        $sql = "INSERT INTO barang (nama_barang, kode_barang, barcode, kategori_id, tahun_pembuatan, bahan, ukuran, nomor_seri_pabrik, 
+                merk_model, jenis_barang, jumlah, harga_beli, kondisi_barang, status, foto) 
+                VALUES ('$nama_barang', '$kode_barang', '$barcode', '$kategori_id', '$tahun_pembuatan', '$bahan', '$ukuran', 
+                '$nomor_seri_pabrik', '$merk_model', '$jenis_barang', '$jumlah', '$harga_beli', '$kondisi_barang', '$status', '$foto_path')";
 
-    // Insert data barang ke database
-    $sql = "INSERT INTO barang (nama_barang, kode_barang, barcode, kategori_id, tahun_pembuatan, bahan, ukuran, nomor_seri_pabrik, 
-            merk_model, jenis_barang, jumlah, harga_beli, kondisi_barang, status, foto) 
-            VALUES ('$nama_barang', '$kode_barang', '$barcode', '$kategori_id', '$tahun_pembuatan', '$bahan', '$ukuran', 
-            '$nomor_seri_pabrik', '$merk_model', '$jenis_barang', '$jumlah', '$harga_beli', '$kondisi_barang', '$status', '$foto_path')";
-    
-    if ($conn->query($sql) === TRUE) {
-        echo "Barang berhasil ditambahkan!";
+        if ($conn->query($sql) === TRUE) {
+            echo "Barang berhasil ditambahkan!";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Gagal mengupload foto!";
     }
 }
 ?>
@@ -136,7 +148,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="mb-4">
         <label for="foto" class="block text-sm font-medium">Foto Barang</label>
         <input type="file" id="foto" name="foto" required class="w-full px-4 py-2 border rounded-md">
+        <p class="text-sm text-gray-600">Hanya file gambar (jpg, jpeg, png, gif) dengan ukuran maksimal 2MB yang diperbolehkan.</p>
     </div>
+
 
     <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-md hover:bg-blue-700 transition">Tambah Barang</button>
 </form>

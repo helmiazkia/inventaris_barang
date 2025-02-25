@@ -9,7 +9,7 @@ $result = $conn->query($sql);
 
 <div class="bg-white p-6 rounded-lg shadow">
     <h3 class="text-xl font-semibold mb-4">Daftar Barang</h3>
-    
+
     <table class="w-full table-auto border-collapse">
         <thead>
             <tr class="bg-gray-200 text-left">
@@ -39,7 +39,7 @@ $result = $conn->query($sql);
                             <img src="<?php echo $row['foto']; ?>" alt="Foto Barang" class="w-20 h-20 object-cover rounded-md">
                         </td>
                         <td class="px-4 py-2 border">
-                            <a href="edit_barang.php?id=<?php echo $row['id']; ?>" class="text-blue-600 hover:text-blue-800">Edit</a> | 
+                            <a href="edit_barang.php?id=<?php echo $row['id']; ?>" class="text-blue-600 hover:text-blue-800">Edit</a> |
                             <a href="hapus_barang.php?id=<?php echo $row['id']; ?>" class="text-red-600 hover:text-red-800">Hapus</a>
                         </td>
                     </tr>
@@ -51,4 +51,4 @@ $result = $conn->query($sql);
             <?php endif; ?>
         </tbody>
     </table>
-</div>
+</div>edit delete duru

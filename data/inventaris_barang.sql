@@ -18,7 +18,7 @@ CREATE TABLE users (
 CREATE TABLE kategori (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nama_kategori VARCHAR(100) NOT NULL
-);
+); 
 
 -- Tabel Barang dengan Penambahan Kolom Baru
 CREATE TABLE barang (
