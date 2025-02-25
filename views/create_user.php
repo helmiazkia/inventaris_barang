@@ -7,6 +7,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit; // Stop further script execution
 }
 
+
+// Check if the user is logged in and has 'admin' role
 include('../config/koneksi.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
@@ -15,14 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
     $role = $_POST['role'];
     $jabatan = $_POST['jabatan'];
     $nip = $_POST['nip'];
+    $nama_pegawai = htmlspecialchars($_POST['nama_pegawai']); // Sanitasi input for employee name
 
     // Hash password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insert data user ke database
-    $sql = "INSERT INTO users (username, password, role, jabatan, nip) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (username, password, role, jabatan, nip, nama_pegawai) VALUES (?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $username, $hashed_password, $role, $jabatan, $nip);
+    $stmt->bind_param("ssssss", $username, $hashed_password, $role, $jabatan, $nip, $nama_pegawai);
 
     if ($stmt->execute()) {
         // Set session untuk mengirimkan pesan sukses ke JavaScript
@@ -44,6 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
 
 <!-- Form Tambah User -->
 <form method="POST" action="">
+    <div class="mb-4">
+        <label for="nama_pegawai" class="block text-sm font-medium">Nama Pegawai</label>
+        <input type="text" id="nama_pegawai" name="nama_pegawai" required class="w-full px-4 py-2 border rounded-md">
+    </div>
     <div class="mb-4">
         <label for="username" class="block text-sm font-medium">Username</label>
         <input type="text" id="username" name="username" required class="w-full px-4 py-2 border rounded-md">
@@ -71,6 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_user'])) {
         <label for="nip" class="block text-sm font-medium">NIP</label>
         <input type="text" id="nip" name="nip" required class="w-full px-4 py-2 border rounded-md">
     </div>
+
+
 
     <button type="submit" name="add_user" class="w-full bg-blue-600 text-white font-bold py-2 rounded-md hover:bg-blue-700 transition">Tambah User</button>
 </form>

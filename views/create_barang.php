@@ -1,4 +1,11 @@
 <?php
+
+// Check if the user is logged in and has 'admin' role
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header("Location: login.php");
+    exit; // Stop further script execution
+}
+
 // Proses form submit untuk menambah barang
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama_barang = $_POST['nama_barang'];
@@ -19,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mengupload foto
     $foto = $_FILES['foto']['name'];
     $foto_tmp = $_FILES['foto']['tmp_name'];
-    $foto_path = 'images/' . basename($foto);  // Nama file foto dengan path
+    $foto_path = '../images/' . basename($foto);  // Nama file foto dengan path
 
     // Cek jika file foto valid
     $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif']; // Ekstensi file yang diizinkan
