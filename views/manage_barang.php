@@ -65,12 +65,48 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
     </style>
 </head>
 
-<body class="bg-gray-100">
-    <!-- Sidebar Navbar -->
-    <?php include('navbar.php'); ?>
+<!DOCTYPE html>
+<html lang="id">
 
-    <!-- Konten Manajemen Barang -->
-    <div class="ml-64 p-8 pt-16 mt-3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Barang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Sidebar -->
+    <?php include('sidebar.php'); ?>
+    <!-- Topbar -->
+    <?php include('topbar.php'); ?>
+
+
+
+    <!-- Konten -->
+    <div class="lg:ml-64 p-6 pt-20 mt-3 transition-all duration-300 min-h-screen">
         <!-- Tombol Tab -->
         <div class="flex space-x-4 mb-6">
             <button onclick="showTab('addBarang')" class="px-6 py-3 rounded-lg transition duration-300 
@@ -105,6 +141,9 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
             window.location.href = '?action=' + tabName;
         }
     </script>
+    <!-- Footer -->
+    <?php include('footer.php'); ?>
+
 </body>
 
 </html>

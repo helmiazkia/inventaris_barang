@@ -26,12 +26,10 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
     <title>Manajemen User</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Fungsi untuk menampilkan notifikasi JavaScript
         function showNotification(type, message) {
-            alert(message); // Simple alert untuk notifikasi
+            alert(message); 
         }
 
-        // Menampilkan notifikasi jika ada parameter success atau error
         <?php if ($success_message): ?>
             window.onload = function() {
                 showNotification('success', '<?php echo $success_message; ?>');
@@ -43,15 +41,8 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
         <?php endif; ?>
     </script>
     <style>
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -59,16 +50,17 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
     </style>
 </head>
 <body class="bg-gray-100">
-    <!-- Navbar (Fixed Sidebar) -->
-  
-    <!-- Panggil Navbar -->
-    <?php include('navbar.php'); ?>
-
-    <!-- Konten Halaman Utama -->
-    <div class="ml-64 p-8 pt-16 mt-3">
+    
+    <!-- Sidebar -->
+    <?php include('sidebar.php'); ?>
+    
+    <!-- Topbar -->
+    <?php include('topbar.php'); ?>
+    
+    <div class="lg:ml-64 p-8 pt-20 min-h-screen">
         
         <!-- Tombol Tab -->
-        <div class="flex space-x-4 mb-6">
+        <div class="flex space-x-4 mb-6 flex-grow">
             <button onclick="showTab('addUser')" class="flex items-center space-x-2 px-5 py-3 rounded-lg transition duration-300 
                 <?php echo ($action == 'addUser') ? 'bg-blue-700 text-white shadow-lg' : 'bg-white border text-gray-700 hover:bg-gray-100'; ?>">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v6h6a1 1 0 110 2h-6v6a1 1 0 11-2 0v-6H3a1 1 0 110-2h6V3a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
@@ -100,9 +92,9 @@ $error_message = isset($_GET['error']) ? $_GET['error'] : null;
 
     <script>
         function showTab(tabName) {
-            // Update the URL to reflect the selected tab
             window.location.href = '?action=' + tabName;
         }
     </script>
+     <?php include('footer.php'); ?>
 </body>
 </html>

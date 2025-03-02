@@ -31,29 +31,41 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="flex flex-col bg-gray-100">
-
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    
     <!-- Panggil Navbar -->
-    <?php include('navbar.php'); ?>
+    <?php include('sidebar.php'); ?>
+    <?php include('topbar.php'); ?>
+    <div class="flex flex-col md:flex-row">
+        <!-- Sidebar (Opsional) -->
+        <aside class="w-full md:w-64 bg-gray-800 text-white p-6 md:h-screen hidden md:block">
+            <h2 class="text-xl font-bold">Admin Panel</h2>
+            <ul class="mt-4">
+                <li class="py-2 px-4 rounded hover:bg-gray-700 <?php echo ($current_page == 'dashboard.php') ? 'bg-gray-700' : ''; ?>">
+                    <a href="dashboard.php">Dashboard</a>
+                </li>
+                <li class="py-2 px-4 rounded hover:bg-gray-700 <?php echo ($current_page == 'manage_user.php') ? 'bg-gray-700' : ''; ?>">
+                    <a href="manage_user.php?action=listUser">Manajemen Pengguna</a>
+                </li>
+            </ul>
+        </aside>
 
-    <!-- Konten Halaman Utama -->
-    <div class="ml-64 p-8 pt-16 mt-10">
-
-        <!-- Kartu Jumlah Pengguna dengan warna kuning dan mepet kiri -->
-        <div class="bg-yellow-300 p-4 rounded-lg shadow-md mb-6 max-w-xs">
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">Jumlah Pengguna</h3>
-            <p class="text-2xl font-bold text-blue-600"><?php echo $total_users; ?></p>
-            <p class="text-sm text-gray-500 mt-2">Total pengguna yang terdaftar di sistem.</p>
-            <!-- Tombol untuk arahkan ke Daftar User -->
-            <div class="mt-4">
-                <a href="manage_user.php?action=listUser" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Lihat Daftar User</a>
+        <!-- Konten Utama -->
+        <main class="flex-1 p-6 pt-16 mt-10 md:ml-64">
+            <div class="max-w-full md:max-w-md mx-auto md:mx-0">
+                <!-- Kartu Jumlah Pengguna -->
+                <div class="bg-yellow-300 p-6 rounded-lg shadow-md mb-6">
+                    <h3 class="text-lg font-semibold text-gray-800">Jumlah Pengguna</h3>
+                    <p class="text-3xl font-bold text-blue-600 mt-2"> <?php echo $total_users; ?> </p>
+                    <p class="text-sm text-gray-600 mt-2">Total pengguna yang terdaftar di sistem.</p>
+                    <!-- Tombol untuk menuju Daftar User -->
+                    <div class="mt-4">
+                        <a href="manage_user.php?action=listUser" class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Lihat Daftar User</a>
+                    </div>
+                </div>
             </div>
-        </div>
-
+        </main>
     </div>
-
-    </div>
-
 </body>
 
 </html>

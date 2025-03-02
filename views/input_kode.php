@@ -8,13 +8,13 @@
 </head>
 <body class="bg-gray-100 flex items-center justify-center h-screen relative">
     <!-- Background Image -->
-    <img src="./public/background.png" class="absolute w-full h-full object-cover" alt="Background">
+    <img src="../public/background.png" class="absolute w-full h-full object-cover" alt="Background">
 
     <!-- Kontainer Utama -->
     <div class="absolute inset-0 flex items-center justify-center">
         <div class="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
             <!-- Logo -->
-            <img src="./public/image.png" class="mx-auto w-16 mb-4" alt="Logo">
+            <img src="../public/image.png" class="mx-auto w-16 mb-4" alt="Logo">
             
             <!-- Judul -->
             <h2 class="text-blue-600 font-bold text-xl mb-3">Kode Barang</h2>
@@ -30,7 +30,7 @@
 
             <!-- Link ke Login -->
             <p class="mt-4 text-sm text-gray-600">
-                Kembali ke login? <a href="./views/login.php" class="text-blue-600 hover:underline">Klik di sini</a>
+                Kembali ke login? <a href="login.php" class="text-blue-600 hover:underline">Klik di sini</a>
             </p>
         </div>
     </div>
