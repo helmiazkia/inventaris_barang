@@ -60,3 +60,16 @@ CREATE TABLE barang_detail (
     FOREIGN KEY (ruangan_asal_id) REFERENCES ruangan(id),
     FOREIGN KEY (ruangan_sekarang_id) REFERENCES ruangan(id)
 );
+
+CREATE TABLE pemindahan (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    kode_unik VARCHAR(50) NOT NULL,  -- Barang yang dipindahkan
+    ruangan_asal_id INT NOT NULL,
+    ruangan_tujuan_id INT NOT NULL,
+    tanggal_pindah DATETIME DEFAULT CURRENT_TIMESTAMP,  -- Otomatis saat pindah
+    keterangan_pindah TEXT DEFAULT NULL,  -- Keterangan pemindahan
+    dipindah_oleh VARCHAR(100) NOT NULL,  -- Nama pegawai yang memindahkan
+    FOREIGN KEY (kode_unik) REFERENCES barang_detail(kode_unik),
+    FOREIGN KEY (ruangan_asal_id) REFERENCES ruangan(id),
+    FOREIGN KEY (ruangan_tujuan_id) REFERENCES ruangan(id)
+);

@@ -8,8 +8,6 @@ $result = $conn->query($sql);
 ?>
 
 <div class="bg-white p-6 rounded-lg shadow">
-
-    <!-- Wrapper untuk scroll horizontal -->
     <div class="overflow-x-auto">
         <table class="w-full max-w-full table-auto border-collapse">
             <thead>
@@ -17,37 +15,37 @@ $result = $conn->query($sql);
                     <th class="px-4 py-2 border">Nama Barang</th>
                     <th class="px-4 py-2 border">Kode Barang</th>
                     <th class="px-4 py-2 border">Kategori</th>
-                    <th class="px-4 py-2 border">Jumlah</th>
-                    <th class="px-4 py-2 border">Harga Beli</th>
-                    <th class="px-4 py-2 border">Kondisi</th>
-                    <th class="px-4 py-2 border">Status</th>
-                    <th class="px-4 py-2 border">Foto</th>
+                    <th class="px-4 py-2 border">Jumlah Total</th>
+                    <th class="px-4 py-2 border">Kondisi Barang</th>
+                    <th class="px-4 py-2 border">Total Harga</th>
                     <th class="px-4 py-2 border">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr class="hover:bg-gray-100 transition">
-                            <td class="px-4 py-2 border"><?php echo $row['nama_barang']; ?></td>
-                            <td class="px-4 py-2 border"><?php echo $row['kode_barang']; ?></td>
-                            <td class="px-4 py-2 border"><?php echo $row['nama_kategori']; ?></td>
-                            <td class="px-4 py-2 border"><?php echo $row['jumlah']; ?></td>
-                            <td class="px-4 py-2 border"><?php echo number_format($row['harga_beli'], 0, ',', '.'); ?></td>
-                            <td class="px-4 py-2 border"><?php echo ucfirst($row['kondisi_barang']); ?></td>
-                            <td class="px-4 py-2 border"><?php echo ucfirst($row['status']); ?></td>
+                        <tr class="hover:bg-gray-100 transition cursor-pointer" onclick="window.location='detail_barang.php?id=<?php echo (int)$row['id']; ?>'">
+                            <td class="px-4 py-2 border"><?php echo htmlspecialchars($row['nama_barang']); ?></td>
+                            <td class="px-4 py-2 border"><?php echo htmlspecialchars($row['kode_barang']); ?></td>
+                            <td class="px-4 py-2 border"><?php echo htmlspecialchars($row['nama_kategori']); ?></td>
+                            <td class="px-4 py-2 border"><?php echo (int)$row['jumlah_total']; ?></td>
                             <td class="px-4 py-2 border">
-                                <img src="<?php echo $row['foto']; ?>" alt="Foto Barang" class="w-20 h-20 object-cover rounded-md">
+                                <ul>
+                                    <li>Baik: <?php echo (int)$row['jumlah_baik']; ?></li>
+                                    <li>Rusak Ringan: <?php echo (int)$row['jumlah_rusak_ringan']; ?></li>
+                                    <li>Rusak Berat: <?php echo (int)$row['jumlah_rusak_berat']; ?></li>
+                                </ul>
                             </td>
+                            <td class="px-4 py-2 border"><?php echo number_format($row['total_harga'], 0, ',', '.'); ?></td>
                             <td class="px-4 py-2 border">
-                                <a href="edit_barang.php?id=<?php echo $row['id']; ?>" class="text-blue-600 hover:text-blue-800">Edit</a> |
-                                <a href="hapus_barang.php?id=<?php echo $row['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                                <a href="edit_barang.php?id=<?php echo (int)$row['id']; ?>" class="text-blue-600 hover:text-blue-800">Edit</a> |
+                                <a href="delete_barang.php?id=<?php echo (int)$row['id']; ?>" class="text-red-600 hover:text-red-800" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="9" class="px-4 py-2 border text-center">Tidak ada barang yang tersedia</td>
+                        <td colspan="8" class="px-4 py-2 border text-center">Tidak ada barang yang tersedia</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
