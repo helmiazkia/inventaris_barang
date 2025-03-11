@@ -73,3 +73,4 @@ CREATE TABLE pemindahan (
     FOREIGN KEY (ruangan_asal_id) REFERENCES ruangan(id),
     FOREIGN KEY (ruangan_tujuan_id) REFERENCES ruangan(id)
 );
+

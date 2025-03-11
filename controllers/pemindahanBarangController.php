@@ -32,6 +32,17 @@ function getPemindahanBarangById($conn, $id) {
     }
     return null;
 }
+function getRuanganById($conn, $id) {
+    $sql = "SELECT * FROM ruangan WHERE id = ?";
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+    return null;
+}
+
 
 // Fungsi untuk mengambil data ruangan
 function getAllRuangan($conn) {
